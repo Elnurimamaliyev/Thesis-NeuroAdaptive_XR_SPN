@@ -1,2 +1,2 @@
-# XR-Eye-BCI-Thesis-LMU
+# MasterThesisLMU - SPNtheMidasBreaker-XR-Eye-BCI
 Trying to solve the Midas Touch problem with (SPN) Neuroadaptive Feedback
