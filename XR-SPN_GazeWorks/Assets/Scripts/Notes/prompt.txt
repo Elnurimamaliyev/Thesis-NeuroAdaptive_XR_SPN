@@ -1,0 +1,183 @@
+________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Change 1: New flow (training at the start of conditions)
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Change 2: Make a neutral scene for training. With 3 neutral icon and UI behavior.
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Change 3: New instruction and break texts
+- Move the icon position in instruction
+________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+CurrentRequiredIcon
+GetCurrentTargetIcon
+
+
+
+ExperimentController:
+- Remove 'scenebreakduration'
+
+- Move every method to right region
+
+- Can you make code less lines and remove unused parts? Can you make it just flowlike, and simplified, most of the codes there I think it's just making things complicated. 
+
+- Inlining Single-Use Methods in ExperimentController
+
+- In experiment mode its not properly moving to next task (trial) with next icon.
+
+Mainly controlled by ExperimentController and IconButton
+
+check logs.txt
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Improvement 2: To solve the problem of get block name, condition name, scene name and so on, just there should be real time variables, and then it should log it as string directly. Then we won't have dublicate scripts. 
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Improvement 3: Without timeout, whole flow:
+1. Instruction, ---------------------------------------------------------------------- ISI
+
+With timeout, whole flow:
+1. Instruction, ----------------------- Timeout
+2.                                                                      Instruction, ----------------------- ISI
+
+Can we make it like first one, but and not making timeout flow spesifically, whenever there is a timeout, pause for 0.5 s, without doing anyting. and then start the flow again. Not the 'reflow' script. 
+
+________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+Looking at the ExContModified.cs file, I can see it appears to be an alternative or modified version of the ExperimentController.cs script. Let me analyze what it's doing:
+
+## Analysis of ExContModified.cs
+
+This file contains a commented-out version of an alternate ExperimentController implementation with different approaches to experiment management. Here are the key differences compared to the active ExperimentController:
+
+1. **Block-based vs. Condition-based Structure**:
+   - The modified version uses "blocks" terminology instead of "conditions"
+   - It refers to currentBlockIndex instead of current_Condition_Index
+
+2. **Training Structure**:
+   - Different approach to training with a dedicated "Training" scene
+   - Uses TrainingTrialsCount (3) vs. ExperimentTrialsCount (50) 
+
+3. **Latin Square Implementation**:
+   - Loads condition order from a CSV file directly
+   - More explicit participant ID management
+
+4. **UI Simplification**:
+   - Uses simpler instruction text showing only "Target:" with the icon
+   - No blankCanvas for ISI, uses transparent approach instead
+
+5. **Scene Management**:
+   - Has explicit handling for a "Training" scene type
+   - Uses RandomizeList instead of ShuffleList for randomization
+   - Different scene validation and preparation logic
+
+6. **Flow Control**:
+   - Uses PlayerPrefs.GetInt/SetInt for boolean values instead of a custom extension
+   - Different welcome screen and experiment introduction
+   - More explicit break screen management
+
+This appears to be an alternate implementation that was being developed or tested, but is currently commented out and not in use. The main ExperimentController.cs is the active version in your project.
+
+
+
+Can you just check what my ExperimentController is doing?
+
+And what is the block here?
+
+Can you check what ExContModified doing?
+
+Use randomize list instead of shuffle from modified version
+
+
+Training Structure:
+
+Different approach to training with a dedicated "Training" scene
+Uses TrainingTrialsCount (3) vs. ExperimentTrialsCount (50)
+
+Make training part similar. And training shouldn't be before experiment strarts. Training should be as scene, opening before 3 scenes and 3 interation.
+
+Can you plan and implement it?
+
+
+Training Structure Implementation Plan
+I'll implement a training approach that integrates training as part of the scene flow rather than a separate mode that runs before the experiment. The plan is to:
+
+Remove the dedicated training block concept
+Add a "Training" scene before each set of regular scenes
+Use a smaller number of trials (3) for training scenes
+Make training seamlessly part of the regular scene flow
+Use the existing "Training" scene with its "Trainer" icon
+
+Don't forget, I have a scene called 'Training', and it's icon called 'Trainer'
+
+Training should not be before each scene, it should be once each condition, as first scene.
+
+
+
+Welcome message should be when we start by default. Don't rely on playerprefs for it. Just simplify it.
+
+Show brake is confusing. It has messages inside. Make it more specific.
+bool isScene = false for instance it's unrelevant and can mix the flow.
+
+
+\\\\\\\\\\\\
+PS C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks> python c:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\Scripts\analyze_gaze_times.py
+Enter the full path to the CSV file: C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\ID-1-task.csv 
+
+Analyzing: ID-1-task.csv
+Columns in C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\ID-1-task.csv: ['Time', 'Block', 'Intention', 'Feedback', 'Scene', 'Taskcount', 'Stage', 'State']
+
+Cross Gazed Statistics:
+Count: 311
+Mean Duration: 1.5188 seconds
+Median Duration: 1.4898 seconds
+Min Duration: 1.2270 seconds
+Max Duration: 7.5027 seconds
+Standard Deviation: 0.3970 seconds
+
+Icon Gazed Statistics:
+Count: 306
+Mean Duration: 0.7337 seconds
+Median Duration: 0.7338 seconds
+Min Duration: 0.6144 seconds
+Max Duration: 0.7545 seconds
+Standard Deviation: 0.0072 seconds
+
+Visualization saved to: C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\gaze_duration_analysis.png
+Results saved to: C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\gaze_duration_results.csv
+
+Analysis complete!
+PS C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks> 
+
+
+Analysis complete!
+PS C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks> python c:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\Scripts\analyze_gaze_times.py
+Enter the full path to the CSV file: C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\ID-8-task.csv
+
+Analyzing: ID-8-task.csv
+Columns in C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\ID-8-task.csv: ['Time', 'Block', 'Intention', 'Feedback', 'Scene', 'Taskcount', 'Stage', 'State']
+
+Cross Gazed Statistics:
+Count: 35
+Mean Duration: 1.4613 seconds
+Median Duration: 1.4888 seconds
+Min Duration: 1.2439 seconds
+Max Duration: 1.7354 seconds
+Standard Deviation: 0.1916 seconds
+
+Icon Gazed Statistics:
+Count: 31
+Mean Duration: 0.7340 seconds
+Median Duration: 0.7339 seconds
+Min Duration: 0.7313 seconds
+Max Duration: 0.7396 seconds
+Standard Deviation: 0.0016 seconds
+
+Visualization saved to: C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\gaze_duration_analysis.png
+Results saved to: C:\Users\simon\Desktop\Elnur\Unity\XR-SPN_GazeWorks\LogData\gaze_duration_results.csv
+
+
+

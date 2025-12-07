@@ -1,0 +1,515 @@
+////////////////////
+Experiment Log Files new Structure
+////////////////////
+
+-------------------------
+ID-XX-state.csv
+-------------------------
+Time -- Unix timestamp in milliseconds
+
+Block
+- TrainingBlock (during training mode)
+- ExperimentBlock (during experiment mode)
+
+Intention
+-Select
+-Observe
+
+Feedback
+- With_Feedback
+- No_Feedback
+
+Scene
+- App
+- Video
+- Document
+
+State
+- start
+- end
+- training_start
+- training_complete
+- scene_start
+- scene_end
+
+-------------------------
+ID-XX-cross.csv (Fixation)
+-------------------------
+Time -- Unix timestamp in milliseconds
+
+Block
+- TrainingBlock (during training mode)
+- ExperimentBlock (during experiment mode)
+
+Intention
+-Select
+-Observe
+
+Feedback
+- With_Feedback
+- No_Feedback
+
+Scene
+- App
+- Video
+- Document
+
+Duration -- one of these millisecond values:
+- 1250
+- 1500
+- 1750
+
+Coordinates of the fixation cross:
+X
+Y
+Z
+
+-------------------------
+ID-XX-item.csv
+-------------------------
+Time -- Unix timestamp in milliseconds
+
+Block
+- TrainingBlock (during training mode)
+- ExperimentBlock (during experiment mode)
+
+Intention
+-Select
+-Observe
+
+Feedback
+- With_Feedback
+- No_Feedback
+
+
+Scene
+- App
+- Video
+- Document
+
+Taskcount
+- Continuously increasing number throughout the experiment (not reset between blocks)
+
+Item (prefixed with scene name)
+- App_Safari
+- App_Files
+- App_Settings
+- App_TV
+- App_Music
+- Document_Undo
+- Document_Redo
+- Document_Save
+- Document_Export
+- Document_Close
+- Video_Rewind
+- Video_Stop
+- Video_Pause
+- Video_Play
+- Video_Forward
+
+Position of the items:
+X
+Y
+Z
+
+-------------------------
+ID-XX-task.csv
+-------------------------
+Time -- Unix timestamp in milliseconds
+
+Block
+- TrainingBlock (during training mode)
+- ExperimentBlock (during experiment mode)
+
+Intention
+-Select
+-Observe
+
+Feedback
+- With_Feedback
+- No_Feedback
+
+Scene
+- App
+- Video
+- Document
+
+Taskcount
+- Continuously increasing number throughout the experiment
+
+Stage
+- instruction (start and end)
+- cross_presented (start and end)
+- cross_gazed (start and end after successfully passing threshold)
+- cross_gazed_failed (fail)
+- icon_gazed (start and end after successfully passing threshold)
+- icon_gazed_failed (fail)
+- feedback (If pop_up_feedback true, then start and end of pop_up_feedback time)
+- ui_action (If ui_action true, then start and end of UIbehavior time)
+- isi (start and end)
+
+State state of each
+- start
+- end
+
+-------------------------
+ID-XX-EEG.csv
+-------------------------
+Time -- Unix timestamp in milliseconds
+TimeLsl -- LSL internal timestamp
+Channel data -- EEG readings from all electrodes (64 channels)
+
+============================
+RECENT CHANGES TO LOGGING
+============================
+
+============================
+KNOWN ISSUES AND FIXES
+============================
+1. "Can not write to a closed TextWriter" Error
+   - Fixed by adding checks if writer is valid and not disposed before writing
+   - Added emergency direct file writing for cases when StreamWriter is closed
+   - Improved exception handling in OnDestroy methods
+   - Added CloseWriter method with proper error handling
+   - Added BaseStream.CanWrite checks before any write operations
+
+2. UI Action Transitions Issues
+   - Fixed the "Already in a transition" warning by implementing better state management
+   - Added ScheduleTransitionAfterUIBehavior to properly sequence transitions
+   - Redesigned the transition flow to handle concurrent operations better
+   - Used local variable tracking instead of global flags to prevent state conflicts
+
+3. Task Completion Logic
+   - Added explicit completion checks after UI behavior completes
+   - Improved logging to track when task transitions occur
+   - Implemented isiBeforeNextScene to ensure clean scene transitions
+   - Added special handling for App scene with single icon in Selection mode
+
+4. Initialization Improvements
+   - Added better error recovery for initialization failures
+   - Made DataLogger more resilient with fallback mechanisms
+   - Improved file handling with proper file sharing flags
+   - Added auto-recovery logic for missing DataLogger instance
+
+////////////////////////
+Project Structure & Hierarchy
+////////////////////
+
+Scene - ExperimentFlow:
+
+1. ExperimentManager
+1.1. CameraAndHelper
+1.1.1. XRCameraRig
+1.1.2. UIHelpers
+1.1.2.1. LaserPointer
+1.1.2.2. Sphere
+1.1.2.3. EventSystem
+1.1.3. VarjoStartup
+1.2. BreakCanvas
+1.2.1. Panel
+1.2.2. BreakText
+1.3. FixationCanvas
+1.3.1. FixationCross
+1.4. InstructionCanvas
+1.4.1. Panel
+1.4.1.1. InstructionText
+1.4.1.2. Instruction-Icons-Image (Uses icon mappings instead of default icon)
+1.5. BlankCanvas
+1.5.1. TransparentPanel
+
+
+Scene - App:
+1. CameraAndHelper - Deactivated  
+2. AppController  - Tag: GameController
+3. MainAppCanvas  - Tag: MainCanvas  
+   3.1. AppButtons  
+       3.1.1. Safari  
+           3.1.1.1. Background  
+           3.1.1.2. Foreground  
+           3.1.1.3. IconName-Text  
+       3.1.2. TV  
+           3.1.2.1. Background  
+           3.1.2.2. Foreground  
+           3.1.2.3. IconName-Text  
+       3.1.3. Settings  
+           3.1.3.1. Background  
+           3.1.3.2. Foreground  
+           3.1.3.3. IconName-Text  
+       3.1.4. Files  
+           3.1.4.1. Background  
+           3.1.4.2. Foreground  
+           3.1.4.3. IconName-Text  
+       3.1.5. Music  
+           3.1.5.1. Background  
+           3.1.5.2. Foreground  
+           3.1.5.3. IconName-Text  
+   3.2. AppWindows  
+       3.2.1. SafariWindow  
+       3.2.2. TvWindow  
+       3.2.3. SettingsWindow  
+       3.2.4. FilesWindow  
+       3.2.5. MusicWindow  
+
+
+Scene - Video:
+1. CameraAndHelper - Deactivated  
+2. VideoController  - Tag: GameController  
+3. MainVideoCanvas  - Tag: MainCanvas  
+   3.1. VideoButtons  
+       3.1.1. RewindButton  
+           3.1.1.1. Background  
+           3.1.1.2. Foreground  
+           3.1.1.3. IconName-Text  
+       3.1.2. StopButton  
+           3.1.2.1. Background  
+           3.1.2.2. Foreground  
+           3.1.2.3. IconName-Text  
+       3.1.3. PauseButton  
+           3.1.3.1. Background  
+           3.1.3.2. Foreground  
+           3.1.3.3. IconName-Text  
+       3.1.4. PlayButton  
+           3.1.4.1. Background  
+           3.1.4.2. Foreground  
+           3.1.4.3. IconName-Text  
+       3.1.5. ForwardButton  
+           3.1.5.1. Background  
+           3.1.5.2. Foreground  
+           3.1.5.3. IconName-Text  
+   3.2. VideoWindow  
+       3.2.1. ScreenBackground (Game object - RawImage inside)
+       3.2.2. VideoRenderCanvas (Game object - RawImage videorendertexture inside)
+
+Scene - Document:
+1. CameraAndHelper - Deactivated  
+2. DocumentController  - Tag: GameController  
+3. MainDocumentCanvas  - Tag: MainCanvas
+   3.1. DocumentButtons  
+       3.1.1. UndoButton  
+           3.1.1.1. Background  
+           3.1.1.2. Foreground  
+           3.1.1.3. IconName-Text  
+       3.1.2. RedoButton  
+           3.1.2.1. Background  
+           3.1.2.2. Foreground  
+           3.1.2.3. IconName-Text  
+       3.1.3. SaveButton  
+           3.1.3.1. Background  
+           3.1.3.2. Foreground  
+           3.1.3.3. IconName-Text  
+       3.1.4. ExportButton  
+           3.1.4.1. Background  
+           3.1.4.2. Foreground  
+           3.1.4.3. IconName-Text  
+       3.1.5. CloseButton  
+           3.1.5.1. Background  
+           3.1.5.2. Foreground  
+           3.1.5.3. IconName-Text  
+   3.2. DocumentWindow  
+       3.2.1. ScreenBackground (GameObject - RawImage inside)  
+       3.2.2. DocumentUIText (TMP) 
+
+# Thesis-SPN-Gaze-XR Project Structure
+
+## Overview
+This Unity project implements a user study framework for XR research that examines different interaction modes and feedback types. The system supports both gaze-based interaction and tracking while logging comprehensive data for analysis.
+
+## Key Components
+
+### ExperimentController
+- Manages the overall experiment flow (blocks, conditions, scenes)
+- Implements Latin Square counterbalancing via DataLogger
+- Controls task sequence: instruction → fixation → gaze → feedback → UI behavior → ISI
+- Handles training and main experiment modes
+- Added robust safety mechanisms for shutdown and transitions
+
+### DataLogger
+- Singleton pattern provides centralized logging across all components
+- Manages participant ID allocation and validation
+- Maintains Latin Square design for condition order
+- Handles all file I/O operations with proper error recovery
+- Logs experiment states, fixation cross, item interactions, and task stages
+- Integrates with EEG recording system via LSL
+- Enhanced error handling for file operations and writer closing
+- Added emergency direct file writing for reliability
+
+### IconButton
+- Implements gaze detection with configurable duration threshold
+- Handles popup visual feedback
+- Manages interaction sequence and UI behavior notifications
+- Adapts to different experimental conditions (selection/observation, feedback/no-feedback)
+- Added cooldown to prevent accidental double-interactions
+
+### UI Controllers
+- AppController: Manages app window interactions and UI behavior
+- VideoController: Controls video player states based on button interactions
+- DocumentController: Handles document editing feedback and UI logic
+- All controllers now properly handle MainCanvas references and content visibility
+
+## Architecture Design
+- Event-based communication between components
+- Centralized logging through DataLogger singleton
+- UI controllers handle specific interface behaviors
+- IconButton provides consistent interaction across all scenes
+- Flexible condition system with proper counterbalancing
+- Training mode simplifies initial user experience
+- Robust error handling and recovery mechanisms
+
+## Project Description: Thesis-SPN-Gaze-XR
+
+### Research Focus
+The experiment examines how visual attention differs between interaction modes (selection vs. observation) and feedback types (with or without visual feedback). It tests these effects across different interface contexts (document editing, video playback, and app menu navigation) while collecting precise timing data for EEG analysis.
+
+### Experimental Design
+- **2x2 Factorial Design**: Testing both interaction mode (Selection/Observation) and feedback type (With/Without)
+- **Latin Square Counterbalancing**: To control for order effects
+- **Training Mode**: Familiarizes participants with the tasks before data collection
+- **Multi-Block Structure**: Each block contains all conditions across different scenes
+
+### Interaction Flow
+1. **Instructions**: Display task instructions with visual icon example
+2. **Fixation Cross**: Randomly timed to prevent anticipation (1250, 1500, or 1750ms)
+3. **Gaze Assessment**: Track when participant fixates on target icon (750ms threshold)
+4. **Visual Feedback**: Optional pop-up effect (300ms) based on condition
+5. **UI Behavior**: Show corresponding UI response (2.0s) based on condition
+6. **ISI**: Inter-stimulus interval between tasks (1.0s)
+
+### Technical Requirements
+- Unity 2022.3 or higher with URP
+- VR headset compatibility (Varjo preferred for eye tracking)
+- EEG integration via LSL
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////
+
+private Dictionary<string, Func<GameObject>> _sceneCanvasFinders = new Dictionary<string, Func<GameObject>>()
+{
+    { "Video", () => FindAnyObjectByType<VideoController>()?.MainCanvas },
+    { "Document", () => FindAnyObjectByType<DocumentController>()?.MainCanvas },
+    { "App", () => FindAnyObjectByType<AppController>()?.MainCanvas },
+    { "Training", () => FindAnyObjectByType<TrainingController>()?.MainCanvas }
+};
+
+private void FindSceneCanvases()
+{
+    Debug.Log($"Finding scene canvases for scene: {currentSceneName}");
+    if (_sceneCanvasFinders.TryGetValue(currentSceneName, out var finder))
+    {
+        GameObject mainCanvas = finder();
+        if (mainCanvas != null)
+        {
+            sceneCanvases = new GameObject[] { mainCanvas };
+            Debug.Log($"Using MainCanvas from {currentSceneName}Controller: {mainCanvas.name}");
+        }
+        else
+        {
+             Debug.LogError($"Could not find scene canvas for {currentSceneName}.");
+             sceneCanvases = new GameObject[0];
+        }
+    }
+    else
+    {
+        Debug.LogError($"No canvas finder defined for scene: {currentSceneName}");
+        sceneCanvases = new GameObject[0];
+    }
+}
+
+private void LoadExperimentConditions()
+{
+    LoadLatinSquareData();
+    SetupConditionsFromLatinSquare();
+}
+
+
+public void CheckTaskCompletion(float delay = 0f)
+{
+    StartCoroutine(DelayedTaskCompletionCheck(delay));
+}
+
+private IEnumerator DelayedTaskCompletionCheck(float delay)
+{
+    if (delay > 0)
+    {
+        yield return new WaitForSeconds(delay);
+    }
+
+    bool complete = AreAllInteractionsComplete();
+    Debug.Log($"Task completion check: All interactions complete = {complete}");
+
+    if (complete && taskActive)
+    {
+        CompleteTask();
+    }
+}
+
+public bool AreAllInteractionsComplete()
+{
+    bool complete = currentIconIndex >= iconSequence.Count;
+    Debug.Log($"AreAllInteractionsComplete check: {complete} (currentIconIndex={currentIconIndex}, iconSequence.Count={iconSequence?.Count ?? 0})");
+    return complete;
+}
+
+
+
+
+private void DisableAllSceneControllers()
+{
+    ISceneController[] controllers = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<ISceneController>().ToArray();
+    foreach (var controller in controllers)
+    {
+        if (controller.MainCanvas != null)
+        {
+            Debug.Log($"Hiding canvas from {controller.GetType().Name}: {controller.MainCanvas.name}");
+            controller.MainCanvas.SetActive(false);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+instruction,start
+instruction,end
+cross_presented,start
+cross_gazed,start
+cross_gazed,end
+cross_presented,end
+icon_presented,start
+icon_gazed,start
+icon_gazed,end
+icon_presented,end
+feedback,start
+feedback,end
+ui_action,start
+ui_action,end
+isi,start
+isi,end
+
+
+Can you change IconButton?
+Remove: _notificationSent, just send handle trial
+
+

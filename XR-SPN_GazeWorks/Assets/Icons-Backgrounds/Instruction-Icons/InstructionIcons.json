@@ -1,0 +1,150 @@
+{
+	"frames": [
+	  {
+		"filename": "play_icon.png",
+		"frame": {"x":0,"y":0,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "pause_icon.png",
+		"frame": {"x":410,"y":0,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "stop_icon.png",
+		"frame": {"x":820,"y":0,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "forward_icon.png",
+		"frame": {"x":1230,"y":0,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "rewind_icon.png",
+		"frame": {"x":1640,"y":0,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  
+	  {
+		"filename": "safari_icon.png",
+		"frame": {"x":0,"y":680,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "tv_icon.png",
+		"frame": {"x":410,"y":680,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "music_icon.png",
+		"frame": {"x":820,"y":680,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "files_icon.png",
+		"frame": {"x":1230,"y":680,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "settings_icon.png",
+		"frame": {"x":1640,"y":680,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  
+	  {
+		"filename": "save_icon.png",
+		"frame": {"x":0,"y":1360,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "close_icon.png",
+		"frame": {"x":410,"y":1360,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "redo_icon.png",
+		"frame": {"x":820,"y":1360,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "undo_icon.png",
+		"frame": {"x":1230,"y":1360,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  },
+	  {
+		"filename": "export_icon.png",
+		"frame": {"x":1640,"y":1360,"w":400,"h":670},
+		"rotated": false,
+		"trimmed": false,
+		"spriteSourceSize": {"x":0,"y":0,"w":400,"h":670},
+		"sourceSize": {"w":400,"h":670},
+		"pivot": {"x":0.5,"y":0.5}
+	  }
+	],
+	"meta": {
+	  "app": "Your Sprite Packer",
+	  "version": "1.0",
+	  "image": "InstructionIcons.png",
+	  "format": "RGBA8888",
+	  "size": {"w":2048,"h":2048},
+	  "scale": "1",
+	  "smartupdate": "created on 2025-03-25"
+	}
+  }

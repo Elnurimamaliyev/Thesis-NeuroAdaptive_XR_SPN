@@ -1,0 +1,11 @@
+- New block design. To 4 blocks.
+
+
+
+Main bugs:
+- Gaze Timer and Logging
+    - Gaze timing should be exactly 750ms, the start and end.
+
+
+- Text
+    - 
