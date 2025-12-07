@@ -1,0 +1,41 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# Unity projects - exclude the Unity project itself from main repo
+# Only track source files and configuration, not the entire project
+XR-SPN_GazeWorks/Library/
+XR-SPN_GazeWorks/Temp/
+XR-SPN_GazeWorks/Obj/
+XR-SPN_GazeWorks/Build/
+XR-SPN_GazeWorks/Builds/
+XR-SPN_GazeWorks/Logs/
+XR-SPN_GazeWorks/UserSettings/
+XR-SPN_GazeWorks/.vs/
+XR-SPN_GazeWorks/.vscode/
+XR-SPN_GazeWorks/.idea/
+XR-SPN_GazeWorks/*.csproj
+XR-SPN_GazeWorks/*.sln
+XR-SPN_GazeWorks/*.suo
+XR-SPN_GazeWorks/*.tmp
+XR-SPN_GazeWorks/*.user
+XR-SPN_GazeWorks/*.userprefs
+XR-SPN_GazeWorks/*.pidb
+XR-SPN_GazeWorks/*.booproj
+XR-SPN_GazeWorks/*.svd
+XR-SPN_GazeWorks/*.pdb
+XR-SPN_GazeWorks/*.mdb
+XR-SPN_GazeWorks/*.opendb
+XR-SPN_GazeWorks/*.VC.db
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
